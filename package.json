@@ -1,0 +1,21 @@
+{
+  "name": "first-app",
+  "version": "1.0.0",
+  "description": "trabalho autoracao multimidia II",
+  "main": "index.js",
+  "scripts": {
+    "test": "comando"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\u001b[D\u001b[D\u001b[C\u001b[Chttps://github.com/Darthwallace/first-app"
+  },
+  "keywords": [
+    "github"
+  ],
+  "author": "wallace leite de sousa",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
