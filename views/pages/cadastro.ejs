@@ -1,5 +1,35 @@
 <%- contentFor( 'body') %>
 
-<div class="jumbotron text-center">
-    <p>Minha primeira aplicação</p>
+<div class="jumbotron">
+    <h2> Dados cadastrais</h2>
+    <p>Lista de usuários cadastrais no sistema.</p>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Email</th>
+            <th>idade</th>
+            <th>Altura</th>
+            <th>Vota?</th>
+            <th>Ação</th>
+        </tr>
+        </thead>
+        <tbody>
+                <% for(index=0;index<usuarios.length;index++){ %>
+                    <tr>    
+
+                    <td><%=usuarios[index].name%></td>
+                    <td><%=usuarios[index].endereco%></td>
+                    <td><%=usuarios[index].email%></td>
+                    <td><%=usuarios[index].age%></td>    
+                    <td><%=usuarios[index].height%></td>
+                    <td><%=usuarios[index].vote%></td>
+                    <td><a href="x"><i class="fas fa-pan"></i></a></td>
+                    <td><a href="x"><i class="fas fa-trash-alt"></i></a></td>
+                
+                    </tr>    
+                <% } %>
+        </tbody>
+    </table>
 </div>

@@ -34,19 +34,22 @@ router.get('/about',(req,res)=>{
  res.render('pages/about'); 
 }); 
 
-router.post('/cadastro/remove',(req,res)=>{
-    let usuario={name: "wallace",email: "wallaceleite915@gmail.com"};
 
-    let result =db.inserirDado(usuario);
-    console.log(result);
-
-});
 
 router.get('/cadastro',(req,res)=>{
-    //let resultados = db.buscarTodos({name:/^A/});
-    //console.log(resultados);
-    res.render('pages/cadastro');
-});
+    let usuarios = [{name:"wallace",endereco:"Rua bom jesus, 2641",email:"wallaceleite915@gmail.com",age:22,height:1.80,vote:true},
+                    {name:"wesley",endereco:"Rua bom jesus, 2655",email:"wesley915@gmail.com",age:15,height:1.75,vote:false}];    
+    res.render('pages/cadastro',{usuarios});
+    });
+
+router.post('/cadastro/remove',(req,res)=>{
+    let usuario={name: "wallace",email: "wallaceleite915@gmail.com"};
+    
+    let result =db.inserirDado(usuario);
+    console.log(result);
+   });
+
+
 
 router.get('/cadastro/insert',(req,res)=>{
     //let usuario={name: "wallace", email:"wallaceleite915@gmail.com"};
