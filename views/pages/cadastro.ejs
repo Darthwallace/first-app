@@ -16,19 +16,23 @@
         </tr>
         </thead>
         <tbody>
-                <% for(index=0;index<usuarios.length;index++){ %>
+                <% let linkRemove="/cadastro/remove/"; %>
+                <% let linkUpdate="/cadastro/update/"; %>
+                <% let cont=0; %>
+                <% for(usuario of usuarios){ %>
                     <tr>    
 
-                    <td><%=usuarios[index].name%></td>
-                    <td><%=usuarios[index].endereco%></td>
-                    <td><%=usuarios[index].email%></td>
-                    <td><%=usuarios[index].age%></td>    
-                    <td><%=usuarios[index].height%></td>
-                    <td><%=usuarios[index].vote%></td>
-                    <td><a href="x"><i class="fas fa-pan"></i></a></td>
-                    <td><a href="x"><i class="fas fa-trash-alt"></i></a></td>
+                    <td><%=usuario.name%></td>
+                    <td><%=usuario.endereco%></td>
+                    <td><%=usuario.email%></td>
+                    <td><%=usuario.age%></td>    
+                    <td><%=usuario.height%></td>
+                    <td><%=usuario.vote%></td>
+                    <td><a href="%=linkUpdate + "id=" + cont %>"></a>><i class="fas fa-pan"></i></a></td>
+                    <td><a href="%=linkRemove %"><i class="fas fa-trash-alt"></i></a></td>
                 
-                    </tr>    
+                    </tr> 
+                    <% cont++;%>   
                 <% } %>
         </tbody>
     </table>

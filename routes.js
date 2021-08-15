@@ -34,35 +34,27 @@ router.get('/about',(req,res)=>{
  res.render('pages/about'); 
 }); 
 
-
-
 router.get('/cadastro',(req,res)=>{
     let usuarios = [{name:"wallace",endereco:"Rua bom jesus, 2641",email:"wallaceleite915@gmail.com",age:22,height:1.80,vote:true},
                     {name:"wesley",endereco:"Rua bom jesus, 2655",email:"wesley915@gmail.com",age:15,height:1.75,vote:false}];    
     res.render('pages/cadastro',{usuarios});
     });
 
-router.post('/cadastro/remove',(req,res)=>{
-    let usuario={name: "wallace",email: "wallaceleite915@gmail.com"};
-    
-    let result =db.inserirDado(usuario);
-    console.log(result);
+router.get('/cadastro/remove/:id',(req,res)=>{
+        res.send('remoção realizada com sucesso');
    });
 
-
+   router.get('/cadastro/update/:id',(req,res)=>{
+        res.send('atualização realizada com sucesso');
+   });
 
 router.get('/cadastro/insert',(req,res)=>{
-    //let usuario={name: "wallace", email:"wallaceleite915@gmail.com"};
-
-    //let result = db.inserirDado(usuario);
-    //console.log(result);
 });
 
 
 router.get('/curriculo',(req,res)=>{ 
  res.send('Meu currículo'); 
 });
-
 
    router.get('/cadastro/list',(req,res)=>{
    //listar de usuarios cadastrado 
