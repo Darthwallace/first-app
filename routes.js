@@ -1,39 +1,19 @@
 const express = require("express");
 const router = express.Router();
 
-
-//Especifica a pasta contendo arquivos estáticos. 
-//O nome 'public' não precisará ser colocado na rota 
-//Para serem alcançados os arquivos e pastas que estão dentro dele. 
-//Por isso na imagem que está na página home.ejs só há o indicativo para 'images'
 router.use(express.static('public'));
 
-//************* Exemplode Rotas ************* 
-
-/*
-http://localhost:3030/css
-http://localhost:3030/images
-http://localhost:3030/index.html
-/ = http://localhost:3030/
-/about = http://localhost:3030/about
-/cadastro =  http://localhost:3030/cadastro
-*/
-
-
-//Req é um objeto que recebe dados da requisição HTTP feita (request). Res permite enviar uma resposta ao navegador (Response)
-router.get('/',(req,res)=>{ //callback - funcao que trata dado evento GET
+router.get('/',(req,res)=>{ 
     res.render('pages/home');
 });
 
-router.get('/about',(req,res)=>{ //callback - funcao que trata dado evento  GET
+router.get('/about',(req,res)=>{ 
 
     res.render('pages/about');
 });
 
-router.get('/cadastro',(req,res)=>{ //callback - funcao que trata dado evento  GET
-
-    //a funcao render pode receber um pametro na forma de objeto literal
-    //no caso, ela irá receber um objeto com campo chamado users e com valor igual ao vetor users
+router.get('/cadastro',(req,res)=>{ 
+    
     res.render('pages/cadastro',{users:users}); 
 });
 
@@ -89,12 +69,12 @@ router.get('/cadastro/list',(req,res)=>{
 router.post('/cadastro/add',(req,res)=>{
     let user={name:"",email:"",address:"",heigth:"",age:"",vote:""};
 
-    user.name = req.body._name;
-    user.email = req.body._email;
-    user.address = req.body._address;
-    user.heigth = req.body._heigth;
-    user.age = req.body._age;
-    user.vote = req.body._vote;
+    user.name = req.body.name;
+    user.email = req.body.email;
+    user.address = req.body.address;
+    user.heigth = req.body.heigth;
+    user.age = req.body.age;
+    user.vote = req.body.vote;
 
     users.push(user);
     console.log("Usuário cadastrado: ",user);
