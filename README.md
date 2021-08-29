@@ -1,9 +1,9 @@
 # first-app
 
-#Autor
+# Autor
 Wellington Wagner Ferreira Sarmento
 
-#Co-criador
+# Co-criador
 Wallace Leite de Sousa
 
 # Colaboradores
