@@ -17,6 +17,10 @@ router.get('/cadastro',(req,res)=>{
     res.render('pages/cadastro',{users:users}); 
 });
 
+router.get('/list',(req,res)=>{  //
+    res.render('pages/list');
+});
+
 router.post('/cadastro/remove',(req,res)=>{
     //let item =req.body.id; //pega o valor passado através do parâmetro id e atribui a variável item. 
     let name = req.body.name;
@@ -49,7 +53,6 @@ router.post('/cadastro/remove',(req,res)=>{
     }
 });
 
-
 router.post('/cadastro/update',(req,res)=>{
     users[req.body.id].name=req.body.name; 
     users[req.body.id].email=req.body.email;
@@ -63,8 +66,19 @@ router.post('/cadastro/update',(req,res)=>{
     console.log("Dados recebidos: ",req.body);
 });
 
+
 router.get('/cadastro/list',(req,res)=>{
+
+    console.log("Olha a lista ae: ",users); //nao use esta linha se tiver muitos elementos em users pois causara lentidao no servidor
+    //let dados = JSON.parse(users);
+    res.send(JSON.stringify(users));
+    res.sendStatus(200);
+    res.status(200).json({
+        status:'sucess',
+        data: `Lista foi adicionado com sucesso!`
+    });
 });
+
 
 router.post('/cadastro/add',(req,res)=>{
     let user={name:"",email:"",address:"",heigth:"",age:"",vote:""};
@@ -76,15 +90,26 @@ router.post('/cadastro/add',(req,res)=>{
     user.age = req.body.age;
     user.vote = req.body.vote;
 
-    users.push(user);
-    console.log("Usuário cadastrado: ",user);
-    console.log("Lista dos usuários: ",users); 
+    // users.push(user);
+    // console.log("Usuário cadastrado: ",user);
+    // console.log("Lista dos usuários: ",users); 
+    res.sendStatus(200);
+    console.log("Dados recebidos: ",req.body);
+    // res.status(200).json({
+    //     status:'sucess',
+    //     data: `Usuário ${user} foi adiocionado com sucesso!`
+    // });
+
+});
+
+router.get('/list/list',(req,res)=>{
+    console.log(users);
+    res.status(200).send(JSON.stringify(users));
     res.sendStatus(200);
     res.status(200).json({
         status:'sucess',
-        data: `Usuário ${user} foi adiocionado com sucesso!`
+        data: `Lista foi adiocionado com sucesso!`
     });
-
 });
 
 //Essa linha permite que este código seja exportado como um módulo e possa ser usado em outras partes da aplicação.

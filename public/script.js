@@ -1,4 +1,8 @@
+const { tr } = require("faker/lib/locales");
+
 let cadastro;
+
+listaCriada = false;
 
 window.onload = listar('/cadastro/list');
 
@@ -88,14 +92,11 @@ function validaForm(data){
         data._height.focus();
         return false;
     }
-
     return true;
-
 }
 
 function update(index,link){
     //seleciona todas as tags que sejam td 
-   
     let tds = document.querySelectorAll(`td[data-index-row='${index}']`);
     let spans = document.querySelectorAll(`td[data-index-row='${index}'] > span`);
     let inputs = document.querySelectorAll(`td[data-index-row='${index}'] > input`);
@@ -222,20 +223,20 @@ function remove(index,_name,link){ //(index,link)
     http.open("POST",link,true); //abre uma comunicação com o servidor através de uma requisição POST
     http.setRequestHeader('Content-Type','application/json'); //constroi um cabecalho http para envio dos dados
 
-    //dataToSend = JSON.stringify({id:index}); //transforma o objeto literal em uma string JSON que é a representação em string de um objeto JSON
-    dataToSend = JSON.stringify({name:_name}); //transforma o objeto literal em uma string JSON que é a representação em string de um objeto JSON
+    
+    dataToSend = JSON.stringify({name:_name}); 
 
-    http.send(dataToSend);//envia dados para o servidor na forma de JSON
+    http.send(dataToSend);
 
     http.onload = ()=>{
         
-        //seleciona todas as tags que sejam td 
+  
         let tr = document.querySelector(`table#list > tbody > tr[data-index-row='${index}']`);
 
         if (http.readyState === 4 && http.status === 200) {
             tr.remove();
             console.log(`Item ${index} removido com sucesso!`);
-            //chamada de função de listagem de usuários na segunda tabela
+           
             listar('/cadastro/list');
 
         } else {
@@ -245,120 +246,148 @@ function remove(index,_name,link){ //(index,link)
     }
 }
 
-//Adiciona um usuario no users do servidor, primeiro parâmetro recebe a identificação do formulário (de cadastro), enquanto o segundo parâmetro recebe o link da rota de cadastro
+
 function add(form, link){    
     if (validaForm(form)){
-        const http = new XMLHttpRequest(); //cria um objeto para requisição ao servidor
+        const http = new XMLHttpRequest(); 
         const url=link;
 
-        //array que será enviado ao servidor
+        
         let data = {id:"",name:"",email:"",address:"",age:"",heigth:"",vote:""};
         let dataToSend;
     
-        http.open("POST",link,true); //abre uma comunicação com o servidor através de uma requisição POST
+        http.open("POST",link,true); 
 
         
-        http.setRequestHeader('Content-Type','application/json'); //constroi um cabecalho http para envio dos dados
-        data.id = 1000; //esse dado nao existe no vetor Users do lado do servidor (backend), mas preciso dele para apontar o indice do vetor que quero modificar
-        //cada linha abaixo captura um campo de usuário e insere no nosso array de objetos que será enviado ao servidor
+        http.setRequestHeader('Content-Type','application/json'); 
+        data.id = 1000; 
         data.name = form._name.value;
         data.email = form._email.value;
         data.address = form._address.value;
         data.age = form._age.value;
-        //toFixed faz com que as casas decimais do valor sejam sempre duas. 1.8 se torna 1.80, 1 se torna 1.00
+        
         data.heigth = parseFloat(form._height.value).toFixed(2);
         data.vote = form._vote.checked;
 
-        //dataToSend = JSON.stringify({id:index}); //transforma o objeto literal em uma string JSON que é a representação em string de um objeto JSON
-        dataToSend = JSON.stringify(data); //transforma o objeto literal em uma string JSON que é a representação em string de um objeto JSON. Se quisesse o objeto no formato binario, usaria: JSON.parse(data)
+       
+        dataToSend = JSON.stringify(data); 
     
-        http.send(dataToSend);//envia dados para o servidor na forma de JSON
+        http.send(dataToSend);
     
         
         http.onload = ()=>{
             
             if (http.readyState === 4 && http.status === 200) {
                 alert("Usuário adicionado com sucesso!");
-                //chamada de função de listagem de usuários na segunda tabela
                 listar('/cadastro/list');
-    
             } else {
                 console.log(`Erro durante a tentativa de adição do usuário: ${_name}! Código do Erro: ${http.status}`); 
             }
-            
-    
         }
     };
 }
 
-//essa função limpa para depois adicionar linhas em uma tabela (table), com conteúdo de cada célula inserido no parâmetro content (deve ser um array de objetos)
-//inpirado por https://stackoverflow.com/questions/8302166/dynamic-creation-of-table-with-dom https://stackoverflow.com/users/376743/rightsaidfred
 function populateTable(table, content) {
-    //limpeza de tabela, o método firstChild captura o primeiro nodo na lista de nodos da tabela
+    
     while (table.firstChild){
        table.removeChild(table.firstChild);
     }
-    //salva em keys as chaves de cada objeto (ex:name, email, address, etc...)
+    
     keys = Object.keys(content[0]);
 
-    //adiciona linha a linha, seguindo o controlador i
+    
     for (var i = 0; i < content.length; ++i) {     
-        //cria um novo documento com <tr></tr>
+        
         var row = document.createElement('tr');
         
-        //adiciona célula a célula na tabela
+        
         for (var j=0;j<6;j++){
-            //cria e insere uma nova célula na linha com <td></td>
+            
             var newCell =  row.insertCell(j);
-            //insere dentro da célula com código html <span>dado do usuário</span>
+            
             newCell.innerHTML = '<span>'+content[i][keys[j]]+'</span>';
         }
-        //insere a nova linha dentro da tabela!
+        
         table.appendChild(row);
     }
 }
 
-//cria/atualiza a lista de usuários no fim da página e retorna a lista de usuários do servidor
 function listar(link){
     
-    const http = new XMLHttpRequest(); //cria um objeto para requisição ao servidor
+    const http = new XMLHttpRequest(); 
     const url=link;
 
-    http.open('GET',link,true); //abre uma comunicação com o servidor através de uma requisição POST
-    http.setRequestHeader('Content-Type','application/json'); //constroi um cabecalho http para envio dos dados
+    http.open('GET',link,true); 
+    http.setRequestHeader('Content-Type','application/json'); 
     
-    //send vazio pois não desejamos enviar nada para o servidor, estamos fazendo apenas uma requisição
+    
     http.send();
-
-    /* este codigo abaixo foi colocado para que a interface de cadastro so seja modificada quando se receber um aviso do servidor que a modificacao foi feita com sucesso. No caso o aviso vem na forma do codigo 200 de HTTP: OK */
-
-    /*
-    readyState:
-    0: request not initialized
-    1: server connection established
-    2: request received
-    3: processing request
-    4: request finished and response is ready
-    status:
-    200: "OK"
-    403: "Forbidden"
-    404: "Page not found"
-    */
-
-    // baseado nos valores acima apresentados, o codigo abaixo mostra o que foi enviado pelo servidor como resposta ao envio de dados. No caso, se o request foi finalizado e o response foi recebido, a mensagem recebida do servidor eh mostrada no console do navegador. esse codigo foi feito apenas para verificar se tudo ocorreu bem no envio
 
     http.onload = ()=>{
         if (http.readyState === 4 && http.status === 200) {
-            //transforma a string  em formato JSON enviada pelo servidor novamente no seu tipo de dado anterior (lista de objetos)
+            
             let lista = JSON.parse(http.response);
 
-            //seleciona qual tabela será criada com os dados de usuários, se ao invés de list-users colocarmos list, a tabela de cima será alterada!
+            
             let tb = document.querySelector(`table#list-users > tbody`);
             populateTable(tb, lista);
             return lista;
         } else {
-            console.log(`Erro durante a tentativa de remoção do usuário: ${_name}! Código do Erro: ${http.status}`); 
+            console.log(`Erro durante a tentativa de remoção do usuário: ${name}! Código do Erro: ${http.status}`); 
         }
     
     }
+}
+function updateList(link){
+    const http = new XMLHttpRequest(); 
+    const urls= link;
+
+    http.open("GET", urls, true); 
+    http.setRequestHeader('Content-Type','application/json'); 
+
+    http.send();
+
+    http.onload = ()=>{                
+        if (http.readyState === 4 && http.status === 200) {
+            var resp = JSON.parse(http.response);
+            console.log(resp);
+            if(listaCriada == false){
+                listaCriada = true;
+                createList(resp);
+            }else{
+               var qtdRows = document.getElementById("lista").rows.length;
+               console.log("qtdRows: "+qtdRows);
+
+               /*
+               * CONSEGUI, MEU BRASILLLLLLL - by Vaneska SOUSAAAAAAA as 00:33 do dia 28/08/2021
+               */
+               for(contador = qtdRows-1; contador > 0; contador--){
+                   document.getElementById('lista').deleteRow(contador);
+               }
+
+               createList(resp);
+            }
+            
+        } else {
+            console.log(`Erro ao adicionar usuario na lista: ${http.status}`); 
+        } 
+    }
+    http.onreadystatechange = (e)=>{
+        if (http.readyState === 4 && http.status === 200) { 
+            console.log(http.responseText);
+        }
+    }
+}
+
+function createList(resp){
+    var tbody = document.querySelector('.Listagem');
+    resp.forEach(function (r) {
+        var tr = document.createElement('tr');
+        for (var campo in r) {
+            var td = document.createElement('td');
+            td.innerHTML = r[campo];
+            tr.appendChild(td);
+        };
+        tbody.appendChild(tr);
+    });
 }

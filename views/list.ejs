@@ -1,0 +1,34 @@
+<%- contentFor( 'body') %>
+
+<div class="jumbotron text-center">
+    <h1>Lista de Usuários Cadastrados</h1>
+    <p>Para ver usuários recem cadastrados clique no botão "atualizar lista" no fim da página</p>
+</div>
+<% let linkEnvia="/list/list"; %>
+<div class="row">
+
+    <div class="col-lg-12 adiciona">
+        <a type="button" class="btn btn-primary" onclick="updateList('<%= linkEnvia %>')" >
+            <i class="fas fa-list"></i>
+            Atualizar Lista
+        </a>
+    </div> 
+
+    <div class="table-responsive-xl ">     
+        <table class="table table-hover bg-light" id="lista">
+            <thead class="thead">
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th>Idade</th>
+                <th>Altura</th>
+                <th>Votante?</th>
+            </tr>
+            </thead>
+            <tbody class="Listagem">
+            </tbody>
+        </table>
+    </div>
+
+</div>
