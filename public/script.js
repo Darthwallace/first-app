@@ -1,4 +1,4 @@
-const { tr } = require("faker/lib/locales");
+//const { tr } = require("faker/lib/locales");
 
 let cadastro;
 
@@ -32,7 +32,6 @@ function validaUpdate(data){
 }
 
 function validaForm(data){
-
     //validação de nome
     if (data._name.value == "") {
         alert("Nenhum nome foi digitado, verifique o campo Nome e tente novamente.");
@@ -230,7 +229,6 @@ function remove(index,_name,link){ //(index,link)
 
     http.onload = ()=>{
         
-  
         let tr = document.querySelector(`table#list > tbody > tr[data-index-row='${index}']`);
 
         if (http.readyState === 4 && http.status === 200) {
@@ -241,40 +239,32 @@ function remove(index,_name,link){ //(index,link)
 
         } else {
             console.log(`Erro durante a tentativa de remoção do usuário: ${_name}! Código do Erro: ${http.status}`); 
-        }
-        
+        } 
     }
 }
-
-
-function add(form, link){    
+function add(form, link) {    
     if (validaForm(form)){
         const http = new XMLHttpRequest(); 
         const url=link;
 
-        
         let data = {id:"",name:"",email:"",address:"",age:"",heigth:"",vote:""};
         let dataToSend;
     
         http.open("POST",link,true); 
-
         
         http.setRequestHeader('Content-Type','application/json'); 
         data.id = 1000; 
         data.name = form._name.value;
         data.email = form._email.value;
         data.address = form._address.value;
-        data.age = form._age.value;
-        
+        data.age = form._age.value;        
         data.heigth = parseFloat(form._height.value).toFixed(2);
         data.vote = form._vote.checked;
-
-       
+   
         dataToSend = JSON.stringify(data); 
     
         http.send(dataToSend);
     
-        
         http.onload = ()=>{
             
             if (http.readyState === 4 && http.status === 200) {
@@ -328,7 +318,6 @@ function listar(link){
             
             let lista = JSON.parse(http.response);
 
-            
             let tb = document.querySelector(`table#list-users > tbody`);
             populateTable(tb, lista);
             return lista;
