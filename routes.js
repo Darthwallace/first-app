@@ -7,6 +7,11 @@ router.get('/',(req,res)=>{
     res.render('pages/home');
 });
 
+router.get('/list',(req,res)=>{  //
+    res.render('pages/list');
+});
+
+
 router.get('/about',(req,res)=>{ 
 
     res.render('pages/about');
@@ -15,10 +20,6 @@ router.get('/about',(req,res)=>{
 router.get('/cadastro',(req,res)=>{ 
     
     res.render('pages/cadastro',{users:users}); 
-});
-
-router.get('/list',(req,res)=>{  //
-    res.render('pages/list');
 });
 
 router.post('/cadastro/remove',(req,res)=>{
@@ -90,15 +91,15 @@ router.post('/cadastro/add',(req,res)=>{
     user.age = req.body.age;
     user.vote = req.body.vote;
 
-    // users.push(user);
-    // console.log("Usuário cadastrado: ",user);
-    // console.log("Lista dos usuários: ",users); 
+    users.push(user);
+    console.log("Usuário cadastrado: ",user);
+    console.log("Lista dos usuários: ",users); 
     res.sendStatus(200);
     console.log("Dados recebidos: ",req.body);
-    // res.status(200).json({
-    //     status:'sucess',
-    //     data: `Usuário ${user} foi adiocionado com sucesso!`
-    // });
+    res.status(200).json({
+        status:'sucess',
+        data: `Usuário ${user} foi adicionado com sucesso!`
+    });
 
 });
 
@@ -107,11 +108,10 @@ router.get('/list/list',(req,res)=>{
     res.status(200).send(JSON.stringify(users));
     res.sendStatus(200);
     res.status(200).json({
-        status:'sucess',
-        data: `Lista foi adiocionado com sucesso!`
+    status:'sucess',
+    data: `Lista foi adicionado com sucesso!`
     });
 });
-
 //Essa linha permite que este código seja exportado como um módulo e possa ser usado em outras partes da aplicação.
 module.exports = router;
 
